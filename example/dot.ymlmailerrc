@@ -1,0 +1,6 @@
+server: smtp.example.jp
+port: 587
+helo_domain: example.jp
+account: me@example.jp
+password: mypassw0rd
+auth_type: plain
