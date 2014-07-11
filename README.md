@@ -1,24 +1,20 @@
 # Ymlmailer
 
-TODO: Write a gem description
+tiny mailer program using YAML-based mail data file.
 
 ## Installation
+Create gem file.
 
-Add this line to your application's Gemfile:
+    $ rake build
 
-    gem 'ymlmailer'
+install it yourself as:
 
-And then execute:
+    $ gem install pkg/ymlmailer-x.xx.gem
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install ymlmailer
 
 ## Usage
 
-TODO: Write usage instructions here
+    $ ymlmailer -f <mail data file>
 
 ## Contributing
 
