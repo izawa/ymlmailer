@@ -46,10 +46,11 @@ rescue => e
 end
 
 ### build up mail body ###
+subject = NKF.nkf '-M -w8', mail['subject']
 
 body = "From: #{mail['from']}\nTo: #{mail['to']}\n" +     # from + to
   (mail['cc'] ? "Cc: #{mail['cc']}\n" : "" ) +            # cc 
-  "Subject: #{mail['subject']}\n\n" + "#{mail['body']}\n" # subject + body
+  "Subject: #{subject}\n\n" + "#{mail['body']}\n" # subject + body
 
 ### send mail ###
 begin
