@@ -1,3 +1,64 @@
 #!/usr/bin/env ruby
 
 require 'ymlmailer'
+
+### parse Option ###
+begin
+  params = ARGV.getopts('f:')
+rescue => e
+  puts e.to_s
+  exit 1
+end
+
+unless params['f']
+  puts "-f required."
+  exit 1
+end
+
+### read config file ###
+confFile = File.expand_path "~/.ymlmailerrc"
+
+unless FileTest.readable?(confFile)
+  puts "can\'t read #{confFile}"
+  exit 1
+end
+
+begin
+  conf = YAML.load_file(confFile)
+rescue => e
+  puts e.to_s
+  exit 1
+end
+
+### load mail data file ###
+dataFile = File.expand_path params['f']
+
+unless FileTest.readable?(dataFile)
+  puts "can\'t read #{dataFile}"
+  exit 1
+end
+
+begin
+  mail = YAML.load_file(dataFile)
+rescue => e
+  puts e.to_s
+  exit 1
+end
+
+### build up mail body ###
+
+body = "From: #{mail['from']}\nTo: #{mail['to']}\n" +     # from + to
+  (mail['cc'] ? "Cc: #{mail['cc']}\n" : "" ) +            # cc 
+  "Subject: #{mail['subject']}\n\n" + "#{mail['body']}\n" # subject + body
+
+### send mail ###
+begin
+  Net::SMTP.start(conf['server'], conf['port'], conf['helo_domain'], 
+    conf['account'], conf['password'], conf['auth_type']) do |smtp|
+    smtp.send_message body, mail['from'], 
+    (mail['to'].split(", ") + mail['cc'].to_s.split(", ") + mail['bcc'].to_s.split(", ")).uniq # [to + cc + bcc].uniq
+  end
+rescue => e
+  puts e.to_s
+  exit 1
+end

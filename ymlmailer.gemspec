@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Ymlmailer::VERSION
   spec.authors       = ["いざわゆきみつ (Yukimitsu Izawa)"]
   spec.email         = ["izawa@izawa.org"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{yaml base mailer.}
+  spec.description   = %q{yaml base mailer.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
